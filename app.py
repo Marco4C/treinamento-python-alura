@@ -1,7 +1,11 @@
 import os
 import csv
 
-restaurantes = (["Machado's Burgues"], ["BK"], ["Mac"], ["Bar do moe"])
+restaurantes = [
+    {"nome": "Praça", "categoria": "Japonesa", "ativo": "Inativo"},
+    {"nome": "Pizza Superma", "categoria": "Pizza", "ativo": "Ativo"},
+    {"nome": "Cantina", "categoria": "Italiano", "ativo": "Inativo"},
+]
 
 
 def exibir_nome_do_programa():
@@ -54,23 +58,29 @@ def escolher_opcao():
 
 def salva_restaurantes():
     with open("restaurantes.csv", "w") as arquivo:
-        escritor = csv.writer(arquivo)
-        for linha in restaurantes:
-            escritor.writerow(linha)
+        nome_do_campo = []
+        for campo_restaurante in restaurantes[0].keys():
+            nome_do_campo.append(campo_restaurante)
+
+        print("nome do campo: {}".format(nome_do_campo))
+        escritor = csv.DictWriter(arquivo, nome_do_campo)
+        for restaurante in restaurantes:
+            print("restaurante: {}".format(restaurante))
+            escritor.writerow(restaurante)
 
 
 def escreve_restaurantes():
     with open("restaurantes.csv") as restaurantes:
-        leitor = csv.reader(restaurantes)
+        leitor = csv.DictReader(restaurantes)
         for linha in leitor:
             print(linha)
 
 
 def main():
     salva_restaurantes()
-    exibir_nome_do_programa()
-    exibir_opcoes()
-    escolher_opcao()
+    # exibir_nome_do_programa()
+    # exibir_opcoes()
+    # escolher_opcao()
 
 
 if __name__ == "__main__":
